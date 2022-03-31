@@ -1,4 +1,4 @@
-name: ROS test workflow
+name: CI 
 
 on: [push]
 
@@ -18,13 +18,9 @@ jobs:
     - name: setup catkin tools
       run: |
         sudo apt update -qq
-        sudo apt install dpkg
-        sudo apt-get install -y python3-catkin-pkg
-        sudo apt-get install -y python3-catkin-tools
-        sudo apt-get install -y python3-osrf-pycommon
-        sudo apt-get install -y python3-rosdep
-        sudo apt-get install -y python3-wstool
-        sudo apt-get install -y ros-cmake-modules
+        sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
+        sudo apt-get update
+        sudo apt-get install python3-catkin-tools
 
     - name: Init workspace
       run: |
