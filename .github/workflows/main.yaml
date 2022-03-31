@@ -15,11 +15,24 @@ jobs:
       with:
         required-ros-distributions: melodic
 
+    - name: setup catkin tools
+      run: |
+        sudo apt update -qq
+        sudo apt install dpkg
+        sudo apt-get install -y python3-catkin-pkg
+        sudo apt-get install -y python3-catkin-tools
+        sudo apt-get install -y python3-osrf-pycommon
+        sudo apt-get install -y python3-rosdep
+        sudo apt-get install -y python3-wstool
+        sudo apt-get install -y ros-cmake-modules
+
     - name: Init workspace
       run: |
         source /opt/ros/melodic/setup.bash
-        mkdir -p ${CATKIN_WS}/src && cd ${CATKIN_WS} && catkin_make
+        mkdir -p ${CATKIN_WS}/src
         ln -s ${GITHUB_WORKSPACE} ${CATKIN_WS}/src/
+        cd ${CATKIN_WS}
+        catkin build
 
         #- name: Run tests
         #  run: |
